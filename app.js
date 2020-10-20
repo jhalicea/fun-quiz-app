@@ -5,54 +5,24 @@ const store = {
   // 5 or more questions are required
   questions: [
     {
-      question: 'What is the size of the Foreign Exchange Market?',
+      question: 'What color is broccoli?',
       answers: [
-        '$84 Billion',
-        '$6 Trillion',
-        '$40 Billion',
-        '$20 Billion' 
+        'red',
+        'orange',
+        'pink',
+        'green'
       ],
-      correctAnswer: '$6 Trillion'
+      correctAnswer: 'green'
     },
     {
-      question: 'The Foreign Exchange Market is opened:',
+      question: 'What is the current year?',
       answers: [
-        '5 days a week and closes at 4PM EST',
-        '24/6',
-        'From Monday to Friday 8AM-5PM EST',
-        '365 days a year'
+        '1970',
+        '2015',
+        '2019',
+        '2005'
       ],
-      correctAnswer: '24/6'
-    },
-    {
-      question: 'The assets traded on the Foreign Exchange Market are:',
-      answers: [
-        '$Money',
-        'Currency Pairs',
-        'Options',
-        'CFDs'
-      ],
-      correctAnswer: 'Currency Pairs'
-    },
-    {
-      question: 'If we want to Buy Euros and Sell Japanese Yens we would Buy:',
-      answers: [
-        'CHFJPY',
-        'EURJPY',
-        'GBPJPY',
-        'EURCHF'
-      ],
-      correctAnswer: 'EURJPY'
-    },
-    {
-      question: 'A standard lot size is equal to:',
-      answers: [
-        '15,000',
-        '100,000',
-        '10,000',
-        '50,000'
-      ],
-      correctAnswer: '100,000'
+      correctAnswer: '2019'
     }
   ],
   quizStarted: false,
@@ -60,12 +30,53 @@ const store = {
   score: 0
 };
 
+
+funtion render() {
+  //This function generates the view each time the store is updated
+};
+
+funtion viewStartPage() {
+  //view the starting page that will include. Welcome and short description. 
+  //Start Quiz button
+};
+
+function viewQuestion() {
+  //Will  generate the questions on each page
+  //keep track of which question we are on
+  //keep track of right and wrong answers.
+  //display answer right or wrong 
+  //Submit button
+};
+
+function viewQuestionCorrect() {
+  //display if question is correct
+  //celebratory image
+  //show current score
+  //display next question
+};
+
+function viewQuestionWrong() {
+  //display if question is wrong
+  //Sad image
+  //Show current score
+  //show the correct answer
+  //display the next question button
+};
+
+function viewEndGame() {
+  //Diplay a tally of the score
+  //Display pass or fail. >= 4 pass.  
+  //Reset button
+};
+
+
 /**
  * 
  * Technical requirements:
  * 
  * Your app should include a render() function, that regenerates the view each time the store is updated. 
  * See your course material and access support for more details.
+ * 
  *
  * NO additional HTML elements should be added to the index.html file.
  *
@@ -78,7 +89,9 @@ const store = {
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
 // These functions return HTML templates
-
+function returnHTMLTemplates() {
+  adfafad
+};
 /********** RENDER FUNCTION(S) **********/
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
