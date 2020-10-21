@@ -55,11 +55,16 @@ const questionDB = {
   ],
   quizStarted: false,
   questionNumber: 0,
-  score: 0
+  score: 0,
+  incorrectAnswers: 0
 };
 
 //reference to the DOM's injection site
 const mainContainer = $('main');
+
+//right/wrong images
+const celbratoryImg = 'https://123emoji.com/wp-content/uploads/2017/08/sticker-14-226.png';
+const incorrectImg = 'https://k60.kn3.net/taringa/C/0/A/F/5/1/lighth/F53.jpg';
 
 // render card into DOM
 render = () => {
@@ -68,7 +73,15 @@ render = () => {
     //render the start page
     mainContainer.html(generateStartPageTemplate(questionDB));
   } else if (questionDB.quizStarted) {
-    //render quiz 
+      if(questionDB.questionNumber < questionDB.questions.length){
+        //render quiz 
+        mainContainer.html(generateQuestionTemplate(questionDB));
+      } else {
+        //render end quiz page
+        console.log('fire end of game');
+        mainContainer.html(viewEndGame());
+      }
+    
   }
 };
 
@@ -89,15 +102,18 @@ const generateStartPageTemplate = (dataSet) => {
   return startPageHTML;
 };
 
-//HandleStart Quiz button
+//Handle Start Quiz button
 mainContainer.on('click', 'button#start', (event) => {
   //prevent from from submitting
   event.preventDefault();
+  //update quiz-started state
+  questionDB.quizStarted = true;
   //Generate question-view
   mainContainer.html(generateQuestionTemplate(questionDB));
 })
 
-
+//stores the correct answer to the current question
+let currentCorrectAnswer = '';
 
 const generateQuestionTemplate = (dataSet) => {
   //Will  generate the questions on each page
@@ -111,7 +127,7 @@ const generateQuestionTemplate = (dataSet) => {
   let currentQuestionNumber = dataSet.questionNumber;
   let currentQuestionObj = dataSet.questions[currentQuestionNumber];
   let answerOptions = currentQuestionObj.answers;
-  let correctAnswer = currentQuestionObj.correctAnswer;
+  currentCorrectAnswer = currentQuestionObj.correctAnswer;
 
   // find the corresponding question-object in the questionDB
   // Generate the question-page view
@@ -169,9 +185,28 @@ mainContainer.on('click', 'button#submitAnswerBtn', (event) => {
   checkAnswer();
 });
 
+//checks if the selected answer matches the correct answer
+  //updates tracking info: player score, question number
+  //conditionally calls view (right answer/ wrong answer)
 const checkAnswer = () => {
   let selectedAnswer = $('[type=radio]:checked').val();
-  console.log('selected answer: ', selectedAnswer);
+
+  //increment question number
+  questionDB.questionNumber += 1;
+
+  if (selectedAnswer === currentCorrectAnswer){
+    //increment player score
+    questionDB.score += 1;
+    
+    //call correct answer page
+    viewQuestionCorrect()
+  } else {
+    //increment incorect answer count
+    questionDB.incorrectAnswers += 1;
+    
+    //call wrong answer page
+    viewQuestionWrong()
+  }
 }
 
 
@@ -179,7 +214,24 @@ function viewQuestionCorrect() {
   //display if question is correct
   //celebratory image
   //show current score
-  //display next question
+  //display next question button
+  mainContainer.html(
+    `
+    <article class="correctAnswer">
+      <h1>Correct!</h1>
+      <img src="${celbratoryImg}" alt="celebratory image">
+      <div class="scoreContainer">
+        <h2>Score: ${questionDB.score}</h2>
+        <h3>Correct: ${questionDB.score}</h3>
+        <h3>Incorrect: ${questionDB.incorrectAnswers}</h3>
+      </div>
+      <button id="nextQuestionBtn" type="submit" class="submitButton">
+        Next Question
+      </button>
+    </article>
+    `
+  )
+
 };
 
 function viewQuestionWrong() {
@@ -188,12 +240,61 @@ function viewQuestionWrong() {
   //Show current score
   //show the correct answer
   //display the next question button
+  mainContainer.html(
+    `
+    <article class="correctAnswer">
+      <h1>Nope!</h1>
+      <h2>Mark this down as a learning opportunity</h2>
+      <img src="${incorrectImg}" alt="faceplant image">
+      <div class="scoreContainer">
+        <h2>Score: ${questionDB.score}</h2>
+        <h3>Correct: ${questionDB.score}</h3>
+        <h3>Incorrect: ${questionDB.incorrectAnswers}</h3>
+      </div>
+      <button id="nextQuestionBtn" type="submit" class="submitButton">
+        Next Question
+      </button>
+    </article>
+    `
+  )
+  
 };
+
+//handle next question button
+mainContainer.on('click', 'button#nextQuestionBtn', (event) => {
+  console.log('next question button fired')
+  //prevent form submission
+  event.preventDefault();
+
+  //load next question
+  render();
+} )
 
 function viewEndGame() {
   //Diplay a tally of the score
   //Display pass or fail. >= 4 pass.  
   //Reset button
+mainContainer.html(`
+  <article class="endQuiz">
+      <h1>End of Quiz</h1>
+      <div class="pass">
+        <h2 class="pass">Looks like you need more of a challenge!</h2>
+        <img src=${celbratoryImg} alt="celebratory duck">
+      </div>
+      <div class="fail">
+        <h2 class="fail">Looks like you aren't living up to your potential</h2>
+        <img src=${incorrectImg} alt="faceplant">
+      </div>
+        
+      <div class="scoreContainer">
+        <h2>Score: ${questionDB.score}</h2>
+        <h3>Correct: ${questionDB.score}</h3>
+        <h3>Incorrect: ${questionDB.incorrectAnswers}</h3>
+      </div>
+      <button id="resetBtn" class="resetButton" type="reset">New Quiz</button>
+
+    </article>
+    `);
 };
 
 //Primary function container that runs when DOM loads
