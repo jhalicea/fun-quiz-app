@@ -122,13 +122,11 @@ const generateQuestionTemplate = (dataSet) => {
 
       <fieldset id="answer-choices">`;
   
-  // 🚧
   // Access the answer options from the question object,
-  
   answerOptions.forEach(answerOption => {
     // For each answer, generate the html and add to 'questionPageHTML'
+    questionPageHTML += generateAnswerSetHTML(answerOption);
   })
-  // 🚧
     
   questionPageHTML += `
       </fieldset>
@@ -147,13 +145,15 @@ const generateQuestionTemplate = (dataSet) => {
 
 //Called upon an array's item.
 //Will generate radio-button based answer option
-const generateAnswerSetHTML = (questionItem) => {
-  let answerOption = `
+const generateAnswerSetHTML = (answer) => {
+  let answerRadioButton = `
       <div class="response-item">
-        <input type="radio" id="answer-choice-${VALUE}" name="answer-choice" value="${VALUE}">
-        <label for="answer-choice-${VALUE}">${VALUE}</label>
+        <input type="radio" id="answer-choice-${answer}" name="answer-choice" value="${answer}">
+        <label for="answer-choice-${answer}">${answer}</label>
       </div>
       `;
+  return answerRadioButton;
+    
 }
 
 const handleQuestionSubmit = () => {
@@ -185,6 +185,7 @@ function viewEndGame() {
   //Reset button
 };
 
+//Primary function container that runs when DOM loads
 $(render);
 
 /**
@@ -205,10 +206,7 @@ $(render);
 
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
-// These functions return HTML templates
-function returnHTMLTemplates() {
-  // adfafad
-};
+
 /********** RENDER FUNCTION(S) **********/
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
