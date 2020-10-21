@@ -8,20 +8,35 @@
 */
 
 /*Styles the header and main for mobile responsitivity*/
-header, main {
+header {
   display: flex;
   flex-direction: column;
   text-align: center;
   margin: 20px 0;
 }
 
+main  {
+  border-style: solid;
+  border-color: red;
+  border-radius: 10px;
+}
+
+main div {
+  padding: 0 15px;
+}
+
 /*Styles for desktop*/
 @media all and (min-width: 800px) {
-  header, main {
+  header {
     display: flex;
     flex-direction: row;
     justify-content: center;
   }
+  main form {
+    padding: 0 15px;
+    text-align: center;
+  }
+
 }
 
 body header h1 {
@@ -63,12 +78,13 @@ form p {
 
 form input[type="radio"] { 
   font-size: 50px;
+  padding-left: 15px;
 }
 
 form input[type="radio"] + label { 
   display: inline;
-  color: #000;
-  font-size: 16px;
+  color: blue;
+  font-size: 16x;
 }
 
 
