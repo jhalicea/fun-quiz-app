@@ -6,3 +6,8 @@
   * https://github.com/andreacardybailey/responsive_example/blob/master/styles/responsive-base.css 
   *
 */
+
+body {
+  text-align: center;
+}
+
