@@ -1,4 +1,25 @@
-//storage object
+/**
+ * 
+ * Collaborate Simple Quiz Single-Page Web App Project
+ * 
+ * 
+ * Technical requirements:
+ * 
+ * App should include a render() function, that regenerates the view each time the store is updated. 
+ *
+ * NO additional HTML elements should be added to the index.html file.
+ *
+ * May add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
+ *
+ * 
+ */
+
+
+/*=============================================
+=            Storage Variables            =
+=============================================*/
+
+//database object
 const questionDB = {
 
   questions: [
@@ -59,6 +80,9 @@ const questionDB = {
   incorrectAnswers: 0
 };
 
+//stores the correct answer to the current question
+let currentCorrectAnswer = '';
+
 //reference to the DOM's injection site
 const mainContainer = $('main');
 
@@ -66,9 +90,18 @@ const mainContainer = $('main');
 const celbratoryImg = 'https://123emoji.com/wp-content/uploads/2017/08/sticker-14-226.png';
 const incorrectImg = 'https://k60.kn3.net/taringa/C/0/A/F/5/1/lighth/F53.jpg';
 
-// render card into DOM
+
+/*=============================================
+=            Render Functions            =
+=============================================*/
+
+/**
+ * render()
+ * 
+ * Conditionally replaces the content of the main container, 
+ * based on the state of the question database-object
+ */
 render = () => {
-  //This function generates the view each time the store is updated
   if (!questionDB.quizStarted) {
     //render the start page
     mainContainer.html(generateStartPageTemplate(questionDB));
@@ -85,8 +118,21 @@ render = () => {
   }
 };
 
+
+
+/*=============================================
+=            Template/View Generators            =
+=============================================*/
+
+/**
+ * generateStartPageTemplate()
+ * 
+ * Generates the start page view
+ * Includes a Welcome and short description of the quiz
+ * @param {object} dataSet - the database object
+ */
 const generateStartPageTemplate = (dataSet) => {
-  //view the starting page that will include. Welcome and short description. 
+
   let startPageHTML = `
     <article id="startPage">
       <h1>Basic Foreign Exchange Market Quiz</h1>
@@ -102,26 +148,16 @@ const generateStartPageTemplate = (dataSet) => {
   return startPageHTML;
 };
 
-//Handle Start Quiz button
-mainContainer.on('click', 'button#start', (event) => {
-  //prevent from from submitting
-  event.preventDefault();
-  //update quiz-started state
-  questionDB.quizStarted = true;
-  //Generate question-view
-  mainContainer.html(generateQuestionTemplate(questionDB));
-})
 
-//stores the correct answer to the current question
-let currentCorrectAnswer = '';
-
+/**
+ * generateQuestionTemplate()
+ * 
+ * Generates the question view
+ * 
+ * @param {object} dataSet - the database object
+ * @returns {string} - returns HTML template string
+ */
 const generateQuestionTemplate = (dataSet) => {
-  //Will  generate the questions on each page
-  //keep track of which question we are on
-  //keep track of right and wrong answers.
-  //display answer right or wrong 
-  //Submit button
-
 
   //Based on the question number that the user is on:
   let currentQuestionNumber = dataSet.questionNumber;
@@ -159,8 +195,13 @@ const generateQuestionTemplate = (dataSet) => {
   return questionPageHTML;
 };
 
-//Called upon an array's item.
-//Will generate radio-button based answer option
+/**
+ * generateAnswerSetHTML()
+ * 
+ * Generates radio-button based answer option 
+ * @param {string} answer - represents the answer item stored at a given index in the answers array
+ * @returns {string} - returns HTML template string
+ */
 const generateAnswerSetHTML = (answer) => {
   let answerRadioButton = `
       <div class="response-item">
@@ -171,108 +212,65 @@ const generateAnswerSetHTML = (answer) => {
   return answerRadioButton;
 }
 
-//handles the question submit button
-//checks if the selected answer matches the correct answer
-  //updates tracking info: player score, right answers, 
-      // wrong answers, question number
-mainContainer.on('click', 'button#submitAnswerBtn', (event) => {
-  //prevents default form submission
-  event.preventDefault();
+/**
+ * viewQuestionCorrect()
+ * 
+ * generates correct answer view
+ */
+const viewQuestionCorrect = () => {
 
-  //check answer
-  checkAnswer();
-});
-
-//checks if the selected answer matches the correct answer
-  //updates tracking info: player score, question number
-  //conditionally calls view (right answer/ wrong answer)
-const checkAnswer = () => {
-  let selectedAnswer = $('[type=radio]:checked').val();
-
-  //increment question number
-  questionDB.questionNumber += 1;
-
-  if (selectedAnswer === currentCorrectAnswer){
-    //increment player score
-    questionDB.score += 1;
-    
-    //call correct answer page
-    viewQuestionCorrect()
-  } else {
-    //increment incorect answer count
-    questionDB.incorrectAnswers += 1;
-    
-    //call wrong answer page
-    viewQuestionWrong()
-  }
-}
-
-
-function viewQuestionCorrect() {
-  //display if question is correct
-  //celebratory image
-  //show current score
-  //display next question button
-  mainContainer.html(
-    `
-    <article class="correctAnswer">
-      <h1>Correct!</h1>
-      <img src="${celbratoryImg}" alt="celebratory image">
-      <div class="scoreContainer">
-        <h2>Score: ${questionDB.score}</h2>
-        <h3>Correct: ${questionDB.score}</h3>
-        <h3>Incorrect: ${questionDB.incorrectAnswers}</h3>
-      </div>
-      <button id="nextQuestionBtn" type="submit" class="submitButton">
-        Next Question
-      </button>
-    </article>
-    `
-  )
-
+  correctAnswerHTML = `
+  <article class="correctAnswer">
+    <h1>Correct!</h1>
+    <img src="${celbratoryImg}" alt="celebratory image">
+    <div class="scoreContainer">
+      <h2>Score: ${questionDB.score}</h2>
+      <h3>Correct: ${questionDB.score}</h3>
+      <h3>Incorrect: ${questionDB.incorrectAnswers}</h3>
+    </div>
+    <button id="nextQuestionBtn" type="submit" class="submitButton">
+      Next Question
+    </button>
+  </article>
+  `;
+  
+  mainContainer.html(correctAnswerHTML);
 };
 
-function viewQuestionWrong() {
-  //display if question is wrong
-  //Sad image
-  //Show current score
-  //show the correct answer
-  //display the next question button
-  mainContainer.html(
-    `
-    <article class="correctAnswer">
-      <h1>Nope!</h1>
-      <h2>Mark this down as a learning opportunity</h2>
-      <img src="${incorrectImg}" alt="faceplant image">
-      <div class="scoreContainer">
-        <h2>Score: ${questionDB.score}</h2>
-        <h3>Correct: ${questionDB.score}</h3>
-        <h3>Incorrect: ${questionDB.incorrectAnswers}</h3>
-      </div>
-      <button id="nextQuestionBtn" type="submit" class="submitButton">
-        Next Question
-      </button>
-    </article>
-    `
-  )
+/**
+ * viewQuestionWrong()
+ * 
+ * Generates wrong answer view
+ */
+const viewQuestionWrong = () => {
+  const wrongAnswerHTML = `
+  <article class="correctAnswer">
+    <h1>Nope!</h1>
+    <h2>Mark this down as a learning opportunity</h2>
+    <img src="${incorrectImg}" alt="faceplant image">
+    <div class="scoreContainer">
+      <h2>Score: ${questionDB.score}</h2>
+      <h3>Correct: ${questionDB.score}</h3>
+      <h3>Incorrect: ${questionDB.incorrectAnswers}</h3>
+    </div>
+    <button id="nextQuestionBtn" type="submit" class="submitButton">
+      Next Question
+    </button>
+  </article>
+  `;
+
+  mainContainer.html(wrongAnswerHTML)
   
 };
 
-//handle next question button
-mainContainer.on('click', 'button#nextQuestionBtn', (event) => {
-  console.log('next question button fired')
-  //prevent form submission
-  event.preventDefault();
 
-  //load next question
-  render();
-} )
+/**
+ * viewEndGame()
+ * 
+ * Generates the end of game view
+ */
+const viewEndGame = () => {
 
-
-function viewEndGame() {
-  //Diplay a tally of the score
-  //Display pass or fail. >= 4 pass.  
-  //Reset button
   let endGameTemplate = `
     <article class="endQuiz">
         <h1>End of Quiz</h1>
@@ -309,8 +307,87 @@ function viewEndGame() {
   mainContainer.html(endGameTemplate);
 };
 
-// determines if player passed
-// returns true if player passed, else false
+/*=============================================
+=            Event Handlers            =
+=============================================*/
+
+/**
+ * Handle Start Quiz button
+ */
+mainContainer.on('click', 'button#start', (event) => {
+  //prevent from from submitting
+  event.preventDefault();
+  //update quiz-started state
+  questionDB.quizStarted = true;
+  //Generate question-view
+  mainContainer.html(generateQuestionTemplate(questionDB));
+});
+
+/**
+ * handles the question submit button
+ * checks if the selected answer matches the correct answer
+ *   updates tracking info: player score, right answers, 
+ *   wrong answers, question number
+ */
+mainContainer.on('click', 'button#submitAnswerBtn', (event) => {
+  //prevents default form submission
+  event.preventDefault();
+
+  //check answer
+  checkAnswer();
+});
+
+
+/**
+ *handles next question button 
+ */
+mainContainer.on('click', 'button#nextQuestionBtn', (event) => {
+  console.log('next question button fired')
+  //prevent form submission
+  event.preventDefault();
+
+  //load next question
+  render();
+});
+
+/*=============================================
+=            Helper Functions            =
+=============================================*/
+  
+/**
+ * checkAnswer()
+ * 
+ * checks if the selected answer matches the correct answer.
+ * updates tracking info: player score, question number.
+ * conditionally calls view (right answer/ wrong answer).
+ */
+const checkAnswer = () => {
+  let selectedAnswer = $('[type=radio]:checked').val();
+
+  //increment question number
+  questionDB.questionNumber += 1;
+
+  if (selectedAnswer === currentCorrectAnswer){
+    //increment player score
+    questionDB.score += 1;
+    
+    //call correct answer page
+    viewQuestionCorrect()
+  } else {
+    //increment incorect answer count
+    questionDB.incorrectAnswers += 1;
+    
+    //call wrong answer page
+    viewQuestionWrong()
+  }
+}
+
+/**
+ * Determines if player passed
+ * 
+ * @returns {boolean} true - player score >= passing requirements
+ * @returns {boolean} false - player score < passing requirements
+ */
 const didPlayerPass = () => {
   // >= 80% = pass
   const passRequirement = 0.8;
@@ -318,39 +395,17 @@ const didPlayerPass = () => {
   //calculate pass/fail
   // (players-score/number of questions)
   let playerFinalScore = (questionDB.score/questionDB.questions.length);
-  console.log('final score: ', playerFinalScore);
-  console.log('pass requirement: ', passRequirement)
-  console.log( ( playerFinalScore >= passRequirement) ? true : false )
+  
   return ( playerFinalScore >= passRequirement) ? true : false;
-
 }
+
+
+/*=============================================
+=            Load Main Container-App            =
+=============================================*/
 
 //Primary function container that runs when DOM loads
 $(render);
 
-/**
- * 
- * Technical requirements:
- * 
- * Your app should include a render() function, that regenerates the view each time the store is updated. 
- * See your course material and access support for more details.
- * 
- *
- * NO additional HTML elements should be added to the index.html file.
- *
- * You may add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
- *
- * SEE BELOW FOR THE CATEGORIES OF THE TYPES OF FUNCTIONS YOU WILL BE CREATING 👇
- * 
- */
 
-/********** TEMPLATE GENERATION FUNCTIONS **********/
-
-
-/********** RENDER FUNCTION(S) **********/
-
-// This function conditionally replaces the contents of the <main> tag based on the state of the store
-
-/********** EVENT HANDLER FUNCTIONS **********/
-
-// These functions handle events (submit, click, etc)
+🥳🥳🥳🥳🥳
