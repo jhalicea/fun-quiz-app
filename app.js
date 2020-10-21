@@ -3,32 +3,64 @@
  */
 const store = {
   // 5 or more questions are required
-  questions: [
-    {
-      question: 'What color is broccoli?',
-      answers: [
-        'red',
-        'orange',
-        'pink',
-        'green'
-      ],
-      correctAnswer: 'green'
-    },
-    {
-      question: 'What is the current year?',
-      answers: [
-        '1970',
-        '2015',
-        '2019',
-        '2005'
-      ],
-      correctAnswer: '2019'
-    }
-  ],
-  quizStarted: false,
-  questionNumber: 0,
-  score: 0
-};
+  const store = {
+    // 5 or more questions are required
+    questions: [
+      {
+        question: 'What is the size of the Foreign Exchange Market?',
+        answers: [
+          '$84 Billion',
+          '$6 Trillion',
+          '$40 Billion',
+          '$4 Trillion' 
+        ],
+        correctAnswer: '$6 Trillion'
+      },
+      {
+        question: 'The Foreign Exchange Market is opened:',
+        answers: [
+          '5 days a week and closes at 4PM EST',
+          '24/6 from Sunday 5PM-Friday 5PM',
+          'From Monday to Friday 8AM-5PM EST',
+          '365 days a year'
+        ],
+        correctAnswer: '24/6'
+      },
+      {
+        question: 'The assets traded on the Foreign Exchange Market are:',
+        answers: [
+          'Money',
+          'Currency Pairs',
+          'Options',
+          'CFDs'
+        ],
+        correctAnswer: 'Currency Pairs'
+      },
+      {
+        question: 'If we want to Buy Euros and Sell Japanese Yens we would Buy:',
+        answers: [
+          'CHFJPY',
+          'EURJPY',
+          'GBPJPY',
+          'EURCHF'
+        ],
+        correctAnswer: 'EURJPY'
+      },
+      {
+        question: 'A standard lot size is equal to:',
+        answers: [
+          '15,000',
+          '100,000',
+          '10,000',
+          '50,000'
+        ],
+        correctAnswer: '100,000'
+      }
+    ],
+    quizStarted: false,
+    questionNumber: 0,
+    score: 0
+  };
 
 
 funtion render() {
