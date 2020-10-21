@@ -24,54 +24,54 @@ const questionDB = {
 
   questions: [
     {
-      question: 'What color is broccoli?',
+      question: 'What is the size of the Foreign Exchange Market?',
       answers: [
-        'red',
-        'orange',
-        'pink',
-        'green'
+        '$84 Billion',
+        '$6 Trillion',
+        '$40 Billion',
+        '$4 Trillion' 
       ],
-      correctAnswer: 'green'
+      correctAnswer: '$6 Trillion'
     },
     {
-      question: 'What is the current year?',
+      question: 'The Foreign Exchange Market is opened:',
       answers: [
-        '1970',
-        '2015',
-        '2020',
-        '2005'
+        '5 days a week and closes at 4PM EST',
+        '24/6 from Sunday 5PM-Friday 5PM',
+        'From Monday to Friday 8AM-5PM EST',
+        '365 days a year'
       ],
-      correctAnswer: '2020'
+      correctAnswer: '24/6'
     },
     {
-      question: 'What is the current year?',
+      question: 'The assets traded on the Foreign Exchange Market are:',
       answers: [
-        '1970',
-        '2015',
-        '2020',
-        '2005'
+        'Money',
+        'Currency Pairs',
+        'Options',
+        'CFDs'
       ],
-      correctAnswer: '2020'
+      correctAnswer: 'Currency Pairs'
     },
     {
-      question: 'What is the current year?',
+      question: 'If we want to Buy Euros and Sell Japanese Yens we would Buy:',
       answers: [
-        '1970',
-        '2015',
-        '2020',
-        '2005'
+        'CHFJPY',
+        'EURJPY',
+        'GBPJPY',
+        'EURCHF'
       ],
-      correctAnswer: '2020'
+      correctAnswer: 'EURJPY'
     },
     {
-      question: 'What is the current year?',
+      question: 'A standard lot size is equal to:',
       answers: [
-        '1970',
-        '2015',
-        '2020',
-        '2005'
+        '15,000',
+        '100,000',
+        '10,000',
+        '50,000'
       ],
-      correctAnswer: '2020'
+      correctAnswer: '100,000'
     }
   ],
   quizStarted: false,
