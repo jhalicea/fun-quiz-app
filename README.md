@@ -1,7 +1,4 @@
 ### Simple quiz app
 
-This app demonstrates:
-collaboration on git
-app archetecture practice
-jquery
-css
+## Description
+An exercise in remote group collaboration and using jQuery to dynamically generate content in a single page application.

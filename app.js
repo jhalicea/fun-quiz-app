@@ -110,7 +110,7 @@ const generateQuestionTemplate = (dataSet) => {
 
     <fieldset id="answer-choices">
       
-        ${/*generate HTML for answer set*/}
+        {/*generate HTML for answer set*/}
       
     </fieldset>
     <div>
