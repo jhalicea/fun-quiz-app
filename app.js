@@ -5,19 +5,12 @@ const store = {
   // 5 or more questions are required
   questions: [
     {
-      question: '<h2>What color is broccoli?<h2>',
+      question: 'What color is broccoli?',
       answers: [
-        `<input type="radio" id="Red" name="questions" value="Red"> 
-        <label for="Red">Red</label>`,
-
-        `<input type="radio" id="Orange" name="questions" value="Orange"> 
-        <label for="Orange">Orange</label>`,
-
-        `<input type="radio" id="Pink" name="questions" value="Pink"> 
-        <label for="Pink">Pink</label>`,
-
-        `<input type="radio" id="Green" name="questions" value="Green"> 
-        <label for="Green">Green</label>`
+        'red',
+        'orange',
+        'pink',
+        'green'
       ],
       correctAnswer: 'green'
     },
@@ -26,10 +19,40 @@ const store = {
       answers: [
         '1970',
         '2015',
-        '2019',
+        '2020',
         '2005'
       ],
       correctAnswer: '2019'
+    },
+    {
+      question: 'What is the best city?',
+      answers: [
+        'san juan',
+        'tampa',
+        'ponce',
+        'bayamon'
+      ],
+      correctAnswer: 'San Juan'
+    },
+    {
+      question: 'What is the best sci-fi show?',
+      answers: [
+        'stranger things',
+        'Battlestar Galactica',
+        'The 100',
+        'Utopia'
+      ],
+      correctAnswer: 'Battlestar Galactica'
+    },
+    {
+      question: 'What is the best age?',
+      answers: [
+        '18 or less',
+        '21 or more',
+        '30 or more',
+        '100 or more'
+      ],
+      correctAnswer: '100 or more'
     }
   ],
   quizStarted: false,
@@ -44,11 +67,12 @@ function render(){
   if(store.quizStarted === false) {
     startView();
   } else if(store.quizStarted === true){
-      if(store.questionNumber < 5){
+      if(store.questionNumber + 1 <= store.questions.length){
+        console.log(store.questions.length);
         questionView();
-      } else if (store.questionNumber > 5){
-        store.quizStarted = false;
-        questionFinalScore()
+      } else {
+        // store.quizStarted = false;
+        questionFinalScore();
       }
   };
 
@@ -58,7 +82,9 @@ function render(){
 
 function startView(){
 // this function will be responsible for the start view of the quiz app
-  const welcomeQuizHTML = `<h2>Welcome To The Quiz App</h2> <button class='btn'>Start The Quiz</button>`
+  const welcomeQuizHTML = `<h2>Welcome To The Quiz App</h2> 
+                          <input id="btn" type="button" value="Start The Quiz">`
+
   $('main').html(welcomeQuizHTML);
   store.quizStarted = true;
   btnListener();
@@ -67,25 +93,64 @@ function startView(){
 
 
 function btnListener(){
-  $('.btn').on('click', function(){
+  $('#btn').on('click', function(event){
+    event.preventDefault();
     render();
   })
 }
 
-
+function btnAnswerListener(correctAnswer){
+  $('#btn').on('click', function(event){
+    event.preventDefault();
+    answerValue = $('input[name="questions"]:checked').val();
+    gradeAnswer(answerValue, correctAnswer);
+  })
+}
 
 function questionView(){
 // this function will be responsible for the question view of the quiz app
+let questionNumber = store.questionNumber;
+let question = store.questions[questionNumber].question;
+let correctAnswer = store.questions[questionNumber].correctAnswer;
 
-const questionAnswers = 
-  `<form id="quiz-app">
-  ${store.questions[store.questionNumber].question}
-  ${store.questions[store.questionNumber].answers.join('')}
-  <button class='btn'>Submit</button>
-  </form>`;
 
-  $('main').html(questionAnswers);
-  btnListener()
+let answersHTML = generateAnswers(questionNumber);
+const questionHTML = `<form id="quiz-app">
+                      <h2>${question}</h2>
+                      ${answersHTML}
+                      <input id="btn" type="button" value="Submit">
+                      </form>`;
+
+
+  $('main').html(questionHTML);
+ 
+  btnAnswerListener(correctAnswer);
+};
+
+function gradeAnswer(answerValue, correctAnswer){
+  console.log(answerValue)
+  
+  if(answerValue === correctAnswer){
+    store.questionNumber++
+    questionCorretView();
+  } else {
+    store.questionNumber++
+    questionWrongView();
+  }
+ 
+};
+
+
+
+function generateAnswers(questionNumber){
+  let answersHTML ='';
+
+  for(let answer of store.questions[questionNumber].answers){
+  answersHTML += `<input type="radio" id="${answer}" name="questions" value="${answer}">
+                  <label for="${answer}">${answer}</label>`;
+  console.log(answersHTML);
+  }
+  return answersHTML;
 };
 
 
@@ -93,6 +158,8 @@ const questionAnswers =
 function questionCorretView(){
 // this function will be responsible for the question correct view of the quiz app
   console.log('render question correct');
+  render()
+
 };
 
 
@@ -100,11 +167,16 @@ function questionCorretView(){
 function questionWrongView(){
 // this function will be responsible for the question wrong view of the quiz app
   console.log('render wrong view');
+  render();
 };
 
 
 
 function questionFinalScore(){
+  console.log('yayyyyyyyyyyyyyyyyyyy');
+  store.questionNumber = 0;
+  store.quizStarted = false;
+  store.score = 0;
 
 };
 
@@ -112,8 +184,6 @@ function questionFinalScore(){
 
 function app(){
   render();
-  questionCorretView();
-  questionWrongView();
 };
 
 
