@@ -111,8 +111,8 @@ render = () => {
         mainContainer.html(generateQuestionTemplate(questionDB));
       } else {
         //render end quiz page
-        console.log('fire end of game');
         mainContainer.html(viewEndGame());
+
       }
     
   }
@@ -342,11 +342,28 @@ mainContainer.on('click', 'button#submitAnswerBtn', (event) => {
  *handles next question button 
  */
 mainContainer.on('click', 'button#nextQuestionBtn', (event) => {
-  console.log('next question button fired')
   //prevent form submission
   event.preventDefault();
 
   //load next question
+  render();
+});
+
+/**
+ * Handles New-Quiz / Reset Button
+ */
+mainContainer.on('click', 'button#resetBtn', (event) => {
+  console.log('new quiz button fired')
+  //prevent form submission
+  event.preventDefault();
+
+  //reset game data
+  questionDB.quizStarted = false;
+  questionDB.questionNumber = 0;
+  questionDB.score = 0;
+  questionDB.incorrectAnswers = 0;
+
+  //load start page
   render();
 });
 
