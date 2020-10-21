@@ -7,17 +7,85 @@
   *
 */
 
-
-main, .testArea {
- margin: 100px 200px;
- border: 1px solid blue;
- padding: 30px;
- display: block;
- 
+/*Styles the header and main for mobile responsitivity*/
+header {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 20px 0;
 }
 
-fieldset {
-  border: 1px solid red;
+main  {
+  border-style: solid;
+  border-color: red;
+  border-radius: 10px;
 }
+
+main div {
+  padding: 0 15px;
+}
+
+/*Styles for desktop*/
+@media all and (min-width: 800px) {
+  header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  main form {
+    padding: 0 15px;
+    text-align: center;
+  }
+
+}
+
+body header h1 {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  
+}
+
+/*this styles all of the text in the paragragph main tag*/
+body main p {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/*this styles all of the li in the main tag*/
+body main li {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/*This styles the submit and next buttons*/
+form button {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 0;
+  font-family: Tahoma;
+  font-size: 16px;
+  background: rgb(0, 0, 0);
+  color: #fff;
+  margin: 0 8px 10px 0;
+}
+
+/*This styles the radio buttons to be clicked on for answer selection*/
+form label,
+form p {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: gray;
+  font-family: arial;
+}
+
+form input[type="radio"] { 
+  font-size: 50px;
+  padding-left: 15px;
+}
+
+form input[type="radio"] + label { 
+  display: inline;
+  color: blue;
+  font-size: 16x;
+}
+
 
 
