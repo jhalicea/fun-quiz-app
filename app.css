@@ -6,3 +6,21 @@
   * https://github.com/andreacardybailey/responsive_example/blob/master/styles/responsive-base.css 
   *
 */
+
+
+main, .testArea {
+ margin: 100px 200px;
+ border: 1px solid blue;
+ padding: 30px;
+ display: block;
+ 
+}
+
+fieldset {
+  border: 1px solid red;
+}
+
+.testArea {
+  display: none;
+}
+

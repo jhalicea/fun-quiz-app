@@ -1,11 +1,6 @@
-/**
- * TESTING CONNECTIVITY TO `JUSTINCODES` BRANCH`
- */
-/**
- * Example store structure
- */
-const store = {
-  // 5 or more questions are required
+//storage object
+const questionDB = {
+
   questions: [
     {
       question: 'What color is broccoli?',
@@ -22,10 +17,40 @@ const store = {
       answers: [
         '1970',
         '2015',
-        '2019',
+        '2020',
         '2005'
       ],
-      correctAnswer: '2019'
+      correctAnswer: '2020'
+    },
+    {
+      question: 'What is the current year?',
+      answers: [
+        '1970',
+        '2015',
+        '2020',
+        '2005'
+      ],
+      correctAnswer: '2020'
+    },
+    {
+      question: 'What is the current year?',
+      answers: [
+        '1970',
+        '2015',
+        '2020',
+        '2005'
+      ],
+      correctAnswer: '2020'
+    },
+    {
+      question: 'What is the current year?',
+      answers: [
+        '1970',
+        '2015',
+        '2020',
+        '2005'
+      ],
+      correctAnswer: '2020'
     }
   ],
   quizStarted: false,
@@ -33,23 +58,79 @@ const store = {
   score: 0
 };
 
+//reference to the DOM's injection site
+const mainContainer = $('main');
 
-funtion render() {
+// render card into DOM
+render = () => {
   //This function generates the view each time the store is updated
+  if (!questionDB.quizStarted) {
+    //render the start page
+    mainContainer.html(generateStartPageTemplate(questionDB));
+  } else if (questionDB.quizStarted) {
+    //render quiz 
+  }
 };
 
-funtion viewStartPage() {
+const generateStartPageTemplate = (dataSet) => {
   //view the starting page that will include. Welcome and short description. 
-  //Start Quiz button
+  let startPageHTML = `
+    <article id="startPage">
+      <h1>Basic Foreign Exchange Market Quiz</h1>
+      <div class="quizDescription">
+        <p>This is a basic foreign exchang market quiz</p>
+        <p>There will be ${dataSet.questions.length} questions</p>
+        <p>Click the button below to begin!</p>
+      </div>
+      <button id="start">Start Quiz</button>
+    </article>
+  `;
+  
+  return startPageHTML;
 };
 
-function viewQuestion() {
+//HandleStart Quiz button
+mainContainer.on('click', 'button#start', () => {
+  mainContainer.html(generateQuestionTemplate(questionDB));
+})
+
+
+
+const generateQuestionTemplate = (dataSet) => {
   //Will  generate the questions on each page
   //keep track of which question we are on
   //keep track of right and wrong answers.
   //display answer right or wrong 
   //Submit button
+
+  let questionPageHTML = `
+  <form>
+    <h2>Question ${dataSet.questionNumber}:</h2>
+    <h3>dataSet</h3>
+
+    <fieldset id="answer-choices">
+      
+        ${/*generate HTML for answer set*/}
+      
+    </fieldset>
+    <div>
+      <p>Question ${dataSet.questionNumber} of ${dataSet.questions.length}</p>
+    </div>
+  </form>`;
+
+  return questionPageHTML;
 };
+
+const generateAnswerSetHTML = (questionItem) => {
+  let answerOption = `
+      <div class="response-item">
+        <input type="radio" id="answer-choice-${VALUE}" name="answer-choice" value="${VALUE}">
+        <label for="answer-choice-${VALUE}">${VALUE}</label>
+      </div>
+      `;
+
+
+}
 
 function viewQuestionCorrect() {
   //display if question is correct
@@ -72,6 +153,7 @@ function viewEndGame() {
   //Reset button
 };
 
+$(render);
 
 /**
  * 
@@ -93,7 +175,7 @@ function viewEndGame() {
 
 // These functions return HTML templates
 function returnHTMLTemplates() {
-  adfafad
+  // adfafad
 };
 /********** RENDER FUNCTION(S) **********/
 
