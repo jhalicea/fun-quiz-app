@@ -179,8 +179,6 @@ mainContainer.on('click', 'button#submitAnswerBtn', (event) => {
   //prevents default form submission
   event.preventDefault();
 
-  console.log('handle submit fired!');
-
   //check answer
   checkAnswer();
 });
@@ -270,22 +268,33 @@ mainContainer.on('click', 'button#nextQuestionBtn', (event) => {
   render();
 } )
 
+
 function viewEndGame() {
   //Diplay a tally of the score
   //Display pass or fail. >= 4 pass.  
   //Reset button
-mainContainer.html(`
-  <article class="endQuiz">
-      <h1>End of Quiz</h1>
+  let endGameTemplate = `
+    <article class="endQuiz">
+        <h1>End of Quiz</h1>
+  `;
+
+  if (didPlayerPass()){
+    endGameTemplate += `
       <div class="pass">
         <h2 class="pass">Looks like you need more of a challenge!</h2>
         <img src=${celbratoryImg} alt="celebratory duck">
       </div>
-      <div class="fail">
+    `;
+  } else {
+    endGameTemplate += `
+    <div class="fail">
         <h2 class="fail">Looks like you aren't living up to your potential</h2>
         <img src=${incorrectImg} alt="faceplant">
       </div>
-        
+    `;
+  }
+
+  endGameTemplate += `
       <div class="scoreContainer">
         <h2>Score: ${questionDB.score}</h2>
         <h3>Correct: ${questionDB.score}</h3>
@@ -294,8 +303,27 @@ mainContainer.html(`
       <button id="resetBtn" class="resetButton" type="reset">New Quiz</button>
 
     </article>
-    `);
+  `;
+
+  //inject generated HTML
+  mainContainer.html(endGameTemplate);
 };
+
+// determines if player passed
+// returns true if player passed, else false
+const didPlayerPass = () => {
+  // >= 80% = pass
+  const passRequirement = 0.8;
+
+  //calculate pass/fail
+  // (players-score/number of questions)
+  let playerFinalScore = (questionDB.score/questionDB.questions.length);
+  console.log('final score: ', playerFinalScore);
+  console.log('pass requirement: ', passRequirement)
+  console.log( ( playerFinalScore >= passRequirement) ? true : false )
+  return ( playerFinalScore >= passRequirement) ? true : false;
+
+}
 
 //Primary function container that runs when DOM loads
 $(render);
