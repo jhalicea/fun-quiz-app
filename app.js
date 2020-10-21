@@ -90,7 +90,10 @@ const generateStartPageTemplate = (dataSet) => {
 };
 
 //HandleStart Quiz button
-mainContainer.on('click', 'button#start', () => {
+mainContainer.on('click', 'button#start', (event) => {
+  //prevent from from submitting
+  event.preventDefault();
+  //Generate question-view
   mainContainer.html(generateQuestionTemplate(questionDB));
 })
 
@@ -103,24 +106,47 @@ const generateQuestionTemplate = (dataSet) => {
   //display answer right or wrong 
   //Submit button
 
-  let questionPageHTML = `
-  <form>
-    <h2>Question ${dataSet.questionNumber}:</h2>
-    <h3>dataSet</h3>
 
-    <fieldset id="answer-choices">
-      
-        {/*generate HTML for answer set*/}
-      
-    </fieldset>
-    <div>
-      <p>Question ${dataSet.questionNumber} of ${dataSet.questions.length}</p>
-    </div>
-  </form>`;
+  //Based on the question number that the user is on:
+  let currentQuestionNumber = dataSet.questionNumber;
+  let currentQuestionObj = dataSet.questions[currentQuestionNumber];
+  let answerOptions = currentQuestionObj.answers;
+  let correctAnswer = currentQuestionObj.correctAnswer;
+
+  // find the corresponding question-object in the questionDB
+  // Generate the question-page view
+  let questionPageHTML = `
+    <form>
+      <h2>Question ${currentQuestionNumber + 1}:</h2>
+      <h3>${currentQuestionObj.question}</h3>
+
+      <fieldset id="answer-choices">`;
+  
+  // 🚧
+  // Access the answer options from the question object,
+  
+  answerOptions.forEach(answerOption => {
+    // For each answer, generate the html and add to 'questionPageHTML'
+  })
+  // 🚧
+    
+  questionPageHTML += `
+      </fieldset>
+      <div>
+        <p>Question ${dataSet.questionNumber + 1} of ${dataSet.questions.length}</p>
+      </div>
+      <div>
+        <button type="submit" class="submitBtn">
+          Submit Answer
+        </button>
+      </div>
+    </form>`;
 
   return questionPageHTML;
 };
 
+//Called upon an array's item.
+//Will generate radio-button based answer option
 const generateAnswerSetHTML = (questionItem) => {
   let answerOption = `
       <div class="response-item">
@@ -128,8 +154,14 @@ const generateAnswerSetHTML = (questionItem) => {
         <label for="answer-choice-${VALUE}">${VALUE}</label>
       </div>
       `;
+}
 
-
+const handleQuestionSubmit = () => {
+  //handles the question submit button
+  //prevents default form submission
+  //checks if the selected answer matches the correct answer
+  //updates tracking info: player score, right answers, 
+      // wrong answers, question number
 }
 
 function viewQuestionCorrect() {
