@@ -134,7 +134,7 @@ const generateQuestionTemplate = (dataSet) => {
         <p>Question ${dataSet.questionNumber + 1} of ${dataSet.questions.length}</p>
       </div>
       <div>
-        <button type="submit" class="submitBtn">
+        <button type="submit" id="submitAnswerBtn" class="submitBtn">
           Submit Answer
         </button>
       </div>
@@ -153,16 +153,27 @@ const generateAnswerSetHTML = (answer) => {
       </div>
       `;
   return answerRadioButton;
-    
 }
 
-const handleQuestionSubmit = () => {
-  //handles the question submit button
-  //prevents default form submission
-  //checks if the selected answer matches the correct answer
+//handles the question submit button
+//checks if the selected answer matches the correct answer
   //updates tracking info: player score, right answers, 
       // wrong answers, question number
+mainContainer.on('click', 'button#submitAnswerBtn', (event) => {
+  //prevents default form submission
+  event.preventDefault();
+
+  console.log('handle submit fired!');
+
+  //check answer
+  checkAnswer();
+});
+
+const checkAnswer = () => {
+  let selectedAnswer = $('[type=radio]:checked').val();
+  console.log('selected answer: ', selectedAnswer);
 }
+
 
 function viewQuestionCorrect() {
   //display if question is correct
