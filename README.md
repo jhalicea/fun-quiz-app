@@ -6,11 +6,6 @@
 - Javascript
 - jQuery
 
-## Colaborators
-- Justin Hager (ZenMnky)
-- Dimitry Alriche (dimitrycodes)
-- Jon Alicea (jhalicea)
-
 ## Project Requirements
 
 - The starting screen should have a button that users can click to start the quiz.
