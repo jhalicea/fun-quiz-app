@@ -7,37 +7,37 @@ const store = {
     {
       question: 'What color is broccoli?',
       answers: [
-        'red',
-        'orange',
-        'pink',
-        'green'
+        'Red',
+        'Orange',
+        'Pink',
+        'Green'
       ],
-      correctAnswer: 'green'
+      correctAnswer: 'Green'
     },
     {
-      question: 'What is the current year?',
+      question: 'What is the best year?',
       answers: [
-        '1970',
-        '2015',
         '2020',
-        '2005'
+        '2020',
+        '2020',
+        '2020'
       ],
-      correctAnswer: '2019'
+      correctAnswer: '2020'
     },
     {
       question: 'What is the best city?',
       answers: [
-        'san juan',
-        'tampa',
-        'ponce',
-        'bayamon'
+        'San Juan',
+        'Tampa',
+        'Ponce',
+        'Bayamon'
       ],
       correctAnswer: 'San Juan'
     },
     {
       question: 'What is the best sci-fi show?',
       answers: [
-        'stranger things',
+        'Stranger Things',
         'Battlestar Galactica',
         'The 100',
         'Utopia'
@@ -82,7 +82,7 @@ function render(){
 
 function startView(){
 // this function will be responsible for the start view of the quiz app
-  const welcomeQuizHTML = `<h2>Welcome To The Quiz App</h2> 
+  const welcomeQuizHTML = `<h2>Welcome To The Fun Quiz App</h2>
                           <input id="btn" type="button" value="Start The Quiz">`
 
   $('main').html(welcomeQuizHTML);
@@ -132,10 +132,10 @@ function gradeAnswer(answerValue, correctAnswer){
   
   if(answerValue === correctAnswer){
     store.questionNumber++
-    questionCorretView();
+    questionCorretView(correctAnswer);
   } else {
     store.questionNumber++
-    questionWrongView();
+    questionWrongView(correctAnswer);
   }
  
 };
@@ -146,8 +146,9 @@ function generateAnswers(questionNumber){
   let answersHTML ='';
 
   for(let answer of store.questions[questionNumber].answers){
-  answersHTML += `<input type="radio" id="${answer}" name="questions" value="${answer}">
-                  <label for="${answer}">${answer}</label>`;
+  answersHTML += `<label for="${answer}">
+                <input type="radio" id="${answer}" name="questions" value="${answer}" required>
+                ${answer}</label>`;
   console.log(answersHTML);
   }
   return answersHTML;
@@ -155,25 +156,65 @@ function generateAnswers(questionNumber){
 
 
 
-function questionCorretView(){
+function questionCorretView(correctAnswer){
 // this function will be responsible for the question correct view of the quiz app
   console.log('render question correct');
-  render()
+  store.score++
+
+  const correctHTML = `<h2>You Are An Expert!</h2>
+                       <h3>Thats Is Corret, ${correctAnswer} is the the ONE!</h3>
+                       <img src="https://media.giphy.com/media/l1KVb2dUcmuGG4tby/giphy.gif" alt="Nerd Alert Gif">
+                       <button id="btn" type="button">Next Question</button>
+  `
+  $('main').html(correctHTML);
+  btnListener()
 
 };
 
 
 
-function questionWrongView(){
+function questionWrongView(correctAnswer){
 // this function will be responsible for the question wrong view of the quiz app
   console.log('render wrong view');
-  render();
+  const wrongHTML = `<h2>You Are Failing In Life</h2>
+                     <h3>The Corret Answer Is ${correctAnswer}</h3>
+                     <img src="https://media.giphy.com/media/3ohs4qw8hkPShGeanS/giphy.gif" alt="Failing In Life">
+                     <button id="btn" type="button">Next Question</button>
+  `
+  $('main').html(wrongHTML);
+  btnListener()
+
 };
 
 
 
 function questionFinalScore(){
-  console.log('yayyyyyyyyyyyyyyyyyyy');
+  
+
+
+  if(store.score > store.questions.length / store.score){
+      const finalScoreHTML = `<h2>You Are The Champion, My Friend</h2>
+                              <h3>Your Final Score Is ${store.score} of ${store.questions.length}</h3>
+                              <img src="https://media.giphy.com/media/6CB9pbArhxfN68eKlo/giphy.gif" alt="You Are A Champion">
+                              <button id="btn" type="button">Start Again</button>
+`
+  $('main').html(finalScoreHTML);
+  btnListener()
+      console.log(store.questions.length / store.score + ' avrg');
+      console.log(store.score);
+  } else {
+    const finalScoreHTML = `<h2>Try Again, Loser</h2>
+                              <h3>Your Final Score Is ${store.score} of ${store.questions.length}</h3>
+                              <img src="https://media.giphy.com/media/mcH0upG1TeEak/giphy.gif" alt="What A Loser">
+                              <button id="btn" type="button">Start Again</button>
+`
+  $('main').html(finalScoreHTML);
+  btnListener()
+    console.log(store.questions.length / store.score + ' avrg');
+    console.log(store.score);
+  }
+
+
   store.questionNumber = 0;
   store.quizStarted = false;
   store.score = 0;
