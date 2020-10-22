@@ -183,9 +183,9 @@ const generateQuestionTemplate = (dataSet) => {
   questionPageHTML += `
       </fieldset>
       <div>
-        <p>Question ${dataSet.questionNumber + 1} of ${dataSet.questions.length}</p>
+        <p class="score-counter">Question ${dataSet.questionNumber + 1} of ${dataSet.questions.length}</p>
       </div>
-      <div>
+      <div class="answerBtn">
         <button type="submit" id="submitAnswerBtn" class="submitBtn">
           Submit Answer
         </button>

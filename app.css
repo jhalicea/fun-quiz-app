@@ -1,17 +1,54 @@
 
 /*Styles the header and main for mobile responsitivity*/
+html {
+  color: #fff;
+}
+
 header {
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin: 20px 0;
+}
+
+body {
+  background: #FC5C7D; 
+  background: -webkit-linear-gradient(to right, #6A82FB, #FC5C7D);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #6A82FB, #FC5C7D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 main  {
   border-style: solid;
   border-color: red;
   border-radius: 10px;
+  margin: 35% 0;
 }
+
+article button {
+  text-align: center;
+}
+
+.score-counter {
+  color: #fff;
+}
+
+fieldset {
+  border: none;
+}
+
+/* input[type=radio   ]:not(old){
+  width   : 28px;
+  margin  : 0;
+  padding : 0;
+  opacity : 0;
+}
+
+input[type=radio   ]:not(old) + label{
+  display      : inline-block;
+  margin-left  : -28px;
+  padding-left : 28px;
+  background   : url('checks.png') no-repeat 0 0;
+  line-height  : 24px;
+} */
 
 main div {
   padding: 0 15px;
@@ -31,10 +68,11 @@ body main p {
 /*this styles all of the li in the main tag*/
 body main li {
   font-family: 'Times New Roman', Times, serif;
+
 }
 
 /*This styles the submit and next buttons*/
-form button {
+/* form button {
   padding: 10px 16px;
   border-radius: 10px;
   border: 0;
@@ -43,6 +81,33 @@ form button {
   background: rgb(0, 0, 0);
   color: #fff;
   margin: 0 8px 10px 0;
+} */
+
+button {
+  text-decoration: none;
+  color: #fff;
+  background-color: #ff214f;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 0;
+  border-radius: 5px;
+  padding: 20px 45px;
+  margin: 55px 0;
+}
+
+button:hover {
+ background-color: #000;
+  transition-duration: .6s;
+  cursor: pointer;
+} 
+
+div button {
+  text-align: center;
+}
+
+input label {
+  color: hotpink;
 }
 
 /*This styles the radio buttons to be clicked on for answer selection*/
@@ -62,12 +127,38 @@ form input[type="radio"] {
 
 form input[type="radio"] + label { 
   display: inline;
-  color: blue;
-  font-size: 16x;
+  color: floralwhite;
+  font-size: 20px;
+  padding: 5px;
+}
+
+form {
+  padding: 20px;
+}
+
+.answerBtn {
+  text-align: center;
+}
+
+.response-item {
+  padding: 7px;
+}
+
+#startPage {
+  padding: 7px;
+  text-align: center;
 }
 
 img {
   border-radius: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.wrongAnswer, .endQuiz{
+  padding: 20px;
+  text-align: center;
 }
 
 /*=============================================
